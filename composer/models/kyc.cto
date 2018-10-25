@@ -1,0 +1,85 @@
+/**
+ * A business network for Kyc
+ */
+namespace org.quickkyc
+
+concept Address {
+    o String street
+    o String city
+    o String state
+    o String country
+    o String zip
+}
+
+participant Member identified by id {
+    o String id
+    o String email
+    o String password
+    o String firstName
+    o String lastName
+    o String contact
+    o Kyc kycDetails optional
+    o DateTime dob optional
+    o Address address optional
+    o String[] authorized optional
+    o String[] customers optional
+}
+
+concept Kyc{
+  o String status
+  o Documents[] documentRequired
+}
+
+asset Category identified by id{
+  o String id
+  o String categoryName
+  o String description
+}
+asset Documents identified by id{
+  o String id
+  o String documentName
+  o String documentImage
+  o String status
+  --> Member MemberObject
+  --> Category categoryObject
+}
+
+asset Keys identified by id {
+  o String id
+  o keyType keyTypeObject default="time"
+  o DateTime startTime
+  //Time based options
+  o Integer hours
+  o DateTime endTime
+  //views option
+  o Integer views
+  o String[] authorized optional
+  o Boolean status default=true
+  --> Member MemberObject
+  --> Documents[] documentObject // add permission in acl to grant access for these documents
+}
+
+enum keyType{
+  o time
+  o views
+  o permanent
+}
+
+abstract transaction MemberTransaction {
+    o String id
+}
+
+abstract transaction keyTransaction {
+    o String id
+}
+transaction createKey extends MemberTransaction{
+  o Keys keyObject
+}
+
+transaction revokeKeyAccess extends keyTransaction{
+
+}
+
+transaction searchKey{
+  --> Keys keyObject
+}

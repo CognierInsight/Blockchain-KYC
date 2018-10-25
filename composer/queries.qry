@@ -1,0 +1,28 @@
+
+query selectMembers {
+  description: "Select all members"
+  statement:
+      SELECT org.quickkyc.Member
+}
+
+query selectCommoditiesByOwner {
+  description: "Select all commodities based on their owner"
+  statement:
+      SELECT org.quickkyc.Documents
+         WHERE (MemberObject == _$MemberObject)
+}
+
+query selectAllCustomers{
+  description: "Select all customers"
+  statement:
+      SELECT org.quickkyc.Member
+         WHERE (customers == _$MemberObject)
+}
+
+//var now = new Date();
+query revokeAccessAfterTime{
+	description: "sdm"
+  statement:
+  		SELECT org.quickkyc.Keys
+  			WHERE (endTime < _$now)
+}

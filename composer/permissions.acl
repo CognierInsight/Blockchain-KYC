@@ -1,0 +1,123 @@
+/**
+ * Access control rules. These rules allow anyone to submit AuthorizeAccess
+ * and RevokeAccess transaction as well as granting full access to a member's
+ * own record. A member can access another member's details if the member has
+ * added them to their authorized list.
+ */
+
+//rule AuthorizeAccessTransaction {
+  //  description: "Allow all participants to submit AuthorizeAccess transactions"
+   // participant: "ANY"
+   // operation: CREATE
+   // resource: "org.quickkyc.AuthorizeAccess"
+   // action: ALLOW
+//}
+
+//rule RevokeAccessTransaction {
+//    description: "Allow all participants to submit RevokeAccess transactions"
+//    participant: "ANY"
+//    operation: CREATE
+  //  resource: "org.quickkyc.RevokeAccess"
+    //action: ALLOW
+//}
+//rule AuthorizeAssetAccessTransaction {
+//    description: "Allow all participants to submit AuthorizeAssetAccess transactions"
+//    participant: "ANY"
+//    operation: CREATE
+//    resource: "org.quickkyc.AuthorizeAssetAccess"
+//    action: ALLOW
+//}
+/* rule RevokeAssetAccessTransaction {
+    description: "Allow all participants to submit RevokeAssetAccess transactions"
+    participant: "ANY"
+    operation: CREATE
+    resource: "org.quickkyc.RevokeAssetAccess"
+    action: ALLOW
+}*/
+rule MemberUpdateAccess {
+    description: "Allow all participants full access to their own record"
+    participant(p): "org.quickkyc.Member"
+    operation: UPDATE
+    resource(r): "org.quickkyc.Member"
+    condition: (r.email === p.email)
+    action: ALLOW
+}
+rule OwnRecordFullAccess {
+    description: "Allow all participants full access to their own record"
+    participant(p): "org.quickkyc.Member"
+    operation: ALL
+    resource(r): "org.quickkyc.Member"
+    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+rule OwnerHasFullAccessToOwn {
+    description: "Allow all participants full access to their own record"
+    participant: "org.quickkyc.Member"
+    operation: ALL
+    resource: "org.quickkyc.Documents"
+    action: ALLOW
+}
+rule OwnerHaveAccessToKey {
+    description: "Allow all participants full access to their own record"
+    participant: "org.quickkyc.Member"
+    operation: CREATE
+    resource: "org.quickkyc.Keys"
+    action: ALLOW
+}
+
+rule revokeKeyAccessTime{
+  description: "Deny based on Check key status"
+    participant(p): "org.quickkyc.Member"
+    operation: READ
+    resource(r): "org.quickkyc.Keys"
+  	condition: (r.status === false)
+    action: DENY
+}
+
+rule OwnerHaveAccessToHisKey {
+    description: "Owner can view do anything with his keys"
+    participant(p): "org.quickkyc.Member"
+    operation: ALL
+    resource(r): "org.quickkyc.Keys"
+  	condition: (r.MemberObject.memberId === p.memberId)
+    action: ALLOW
+}
+rule OwnerCanCreateKey {
+    description: "Allow all participants full access to their own record"
+    participant: "org.quickkyc.Member"
+    operation: CREATE
+    resource: "org.quickkyc.createKey"
+    action: ALLOW
+}
+rule ForeignRecordConditionalAccess {
+    description: "Allow participants access to other people's records if granted"
+    participant(p): "org.quickkyc.Member"
+    operation: ALL
+    resource(r): "org.quickkyc.Member"
+    condition: (r.authorized && r.authorized.indexOf(p.getIdentifier()) > -1)
+    action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
