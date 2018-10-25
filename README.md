@@ -96,5 +96,5 @@ All routes, except passport/token, require a JWT header `Authorization Bearer <t
 
 Note:
 
-It is not a final Application, This source code give you better understanding of Blockchain hyperledger composer.
+Dear All, This Project is not complete. This source code gives you better understanding of Blockchain hyperledger composer.
 
