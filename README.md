@@ -98,3 +98,5 @@ Note:
 
 Dear All, This Project is not complete. This source code gives you better understanding of Blockchain hyperledger composer.
 
+Using this Source code, you can generate the token for login using passport. You can upload the image and categorize the image file into respective category.
+
