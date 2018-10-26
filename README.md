@@ -82,18 +82,6 @@ The following routes are available:
 - POST /api/v1/passport/token:  get new token
 - POST /api/v1/passport/user:  get user passport
 
-**driver**
-
-- GET /api/v1/drivers:  get all drivers, can be called with query parameter `resolve=true/false`
-- GET /api/v1/drivers/query:  get all drivers but by using a defined query in the composer-business-network project
-- GET /api/v1/drivers/${id}:  get a driver by ID, can be called with query parameter `resolve=true/false`
-- POST /api/v1/drivers: create a new driver
-- PUT /api/v1/drivers/${id}: update a new driver
-- DELETE /api/v1/drivers/${id}: delete a new driver
-- GET /api/v1/drivers/${id}/trucks: get all trucks for driver by query
-
-All routes, except passport/token, require a JWT header `Authorization Bearer <token>`
-
 Note:
 
 Dear All, This Project is not complete. This source code gives you better understanding of Blockchain hyperledger composer.
