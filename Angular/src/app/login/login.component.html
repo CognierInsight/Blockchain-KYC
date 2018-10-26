@@ -1,0 +1,255 @@
+<form [formGroup]="form" [hidden]="this.authService.isLoggedIn()">
+    <fieldset>
+        <legend>Login</legend>
+        <div class="form-field">
+            <label>Email:</label>
+            <input name="email" formControlName="email">
+        </div>
+        <div class="form-field">
+            <label>Password:</label>
+            <input name="password" formControlName="password" 
+                   type="password">
+        </div>
+    </fieldset>
+    <div class="form-buttons" >
+        <button class="button button-primary" 
+                (click)="login()">Login</button>
+    </div>	
+</form>
+
+<form>
+	<div class="form-buttons" [hidden]="!this.authService.isLoggedIn()">
+		<button class="button button-primary" 
+	    	    (click)="this.authService.logout()">Logout</button>
+	</div>
+	<div class="form-buttons" [hidden]="!this.authService.isLoggedIn()">
+		<button class="button button-primary" 
+	    	    (click)="this.authService.WHOAMI()">WOHAMI</button>
+	</div>
+	<div class="form-buttons" [hidden]="!this.authService.isAdmin()">
+	    <button class="button button-primary" 
+	            (click)="fetchMembers()">Fetch Members</button>
+	</div>
+    <div class="form-buttons" [hidden]="!this.authService.isAdmin()">
+        <button class="button button-primary" 
+                (click)="fetchMembersByQuery()">Fetch Members by query</button>
+    </div>
+
+    
+</form>
+
+
+<form [formGroup]="createUserForm" [hidden]="!this.authService.isAdmin()">
+    <fieldset>
+        <legend>Create New User</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        <div class="form-field">
+            <label>Email:</label>
+            <input name="email" formControlName="email">
+        </div>
+        <div class="form-field">
+            <label>Password:</label>
+            <input name="password" formControlName="password" 
+                   type="password">
+        </div>
+        <div class="form-field">
+            <label>First Name:</label>
+            <input name="firstName" formControlName="firstName" 
+                   type="text">
+        </div>
+        <div class="form-field">
+            <label>Last Name:</label>
+            <input name="lastName" formControlName="lastName" 
+                   type="text">
+        </div>
+        <div class="form-field">
+            <label>DoB:</label>
+            <input name="dob" formControlName="dob" 
+                   type="date">
+        </div>
+        <div class="form-field">
+            <label>Contact:</label>
+            <input name="contact" formControlName="contact" 
+                   type="text">
+        </div>                         
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="createUser()">Create</button>
+    </div>
+</form>
+
+
+<form [formGroup]="createCategoryForm" [hidden]="!this.authService.isAdmin()">
+    <fieldset>
+        <legend>Create New category</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        
+        <div class="form-field">
+            <label>Category Name:</label>
+            <input name="categoryName" formControlName="categoryName" 
+                   type="text">
+        </div>
+        <div class="form-field">
+            <label>description:</label>
+            <input name="description" formControlName="description" 
+                   type="text">
+        </div>
+        
+                                
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="createCategory()">Create</button>
+    </div>
+</form>
+
+
+
+<form [formGroup]="createDocumentForm" [hidden]="this.authService.isAdmin()">
+    <fieldset>
+        <legend>Create New DOcument</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        <div class="form-field">
+            <label>document Name:</label>
+            <input name="documentName" formControlName="documentName" 
+                   type="text">
+        </div>
+        <div class="form-field">
+            <label>document Image:</label>
+            <input name="documentImage" formControlName="pdocumentImage" 
+                   type="text">
+        </div>
+        <div class="form-field">
+            <label>Member Object:</label>
+            <input name="MemberObject" formControlName="MemberObject" 
+                   type="text">
+        </div>
+        <div class="form-field">
+            <label>category Object</label>
+            <input name="categoryObject" formControlName="categoryObject" 
+                   type="text">
+        </div>
+        
+                                 
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="createDocument()">Create</button>
+    </div>
+</form>
+
+
+<form [formGroup]="searchIdForm" [hidden]="!this.authService.isAdmin()">
+    <fieldset>
+        <legend>fetch members by id</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        
+                                
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="fetchMembersById()">fetch by id</button>
+    </div>
+</form>
+
+
+
+<form [formGroup]="searchIdForm" [hidden]="this.authService.isAdmin()">
+    <fieldset>
+        <legend>fetch documents by id</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        
+                                
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="fetchDocumentsById()">fetch</button>
+    </div>
+</form>
+
+
+
+
+
+<form [formGroup]="searchIdForm" [hidden]="!this.authService.isAdmin()">
+    <fieldset>
+        <legend>delete members by id</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        
+                                
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="deleteMembersById()">delete member</button>
+    </div>
+</form>
+
+
+<form>
+    <div class="form-buttons" [hidden]="!this.authService.isAdmin()">
+        <button class="button button-primary" 
+                (click)="fetchCategorys()">Fetch categorys</button>
+    </div>
+</form>
+
+
+<form>
+    <div class="form-buttons" [hidden]="!this.authService.isAdmin()">
+        <button class="button button-primary" 
+                (click)="fetchDocuments()">Fetch docs</button>
+    </div>
+</form>
+
+
+
+
+<form [formGroup]="searchIdForm" [hidden]="!this.authService.isAdmin()">
+    <fieldset>
+        <legend>categorys by id</legend>
+        <div class="form-field">
+            <label>ID:</label>
+            <input name="id" formControlName="id">
+        </div>
+        
+                                
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="fetchCategorysById()">fetch catogory by id</button>
+    </div>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="deleteCategorysById()">delete category by id</button>
+    </div>
+
+</form>
+
+
+
+
+
+<!--     newMember.email = member.email;
+    newMember.password = member.password;
+    newMember.firstName = member.firstName;
+    newMember.lastName = member.lastName;
+    newMember.dob = member.dob; //yyyy-mm-dd
+    newMember.contact = member.contact; -->
